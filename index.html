@@ -1541,6 +1541,7 @@ function renderShipmentList() {
 
   list.innerHTML = filtered.map(s => {
     const stInfo = STATUSES.find(st => st.id === s.currentStatus);
+    const docCount = (s.documents || []).length;
     return `
       <div class="shipment-row" onclick="openModal('${s.id}')">
         <div class="shipment-row-icon">
@@ -1548,7 +1549,10 @@ function renderShipmentList() {
         </div>
         <div class="shipment-row-info">
           <div class="shipment-row-name">${s.client}</div>
-          <div class="shipment-row-code">${s.id} · ${s.origin} → ${s.dest}</div>
+          <div class="shipment-row-code">
+            ${s.id} · ${s.origin} → ${s.dest}
+            ${docCount ? ` · 📎 ${docCount} documento${docCount > 1 ? 's' : ''}` : ''}
+          </div>
         </div>
         <div class="shipment-row-status ${stInfo ? stInfo.color : ''}">${stInfo ? stInfo.label : s.currentStatus}</div>
       </div>
